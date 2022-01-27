@@ -6,3 +6,4 @@ one or two examples of how to invoke your code;
 optionally: who wrote the code, how to cite it, and who to contact for help.
 
 ![Chris Or's Dream Car](test.jpg)
+Chris Or's Dream Car
