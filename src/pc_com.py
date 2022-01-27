@@ -14,6 +14,7 @@
 '''
 import serial
 import time
+from matplotlib import pyplot
 
 class pc_com:
     '''!
@@ -38,10 +39,19 @@ class pc_com:
                            Therefore this argument is either 1 or 2.
         '''
         self.COMx = COMx
-        
-        with serial.Serial (self.COMx, 115200) as s_port:
-            print (s_port.readline ().split (b','))
             
+
+    def check_float(val):
+    ''' @brief checks the value if it can be turned into a float
+        @details This function is used to make sure a float value is going to be grpahed.
+        @param val This input value is being checked if it can be a float data type
+    '''
+        try:
+            float(val)
+            return True
+        except ValueError:
+            return False
+
     def read(self):
         '''!
             @brief Updates encoder position 
@@ -49,15 +59,21 @@ class pc_com:
                      of the specfied encoder
             @return Returns the position of the encoder
         '''
-        ## Defines the position of the encoder as the the timer linked to the encoder
+        with serial.Serial (self.COMx, 115200) as s_port:
+            data = s_port.readlines()
+            x = []
+            y = []
+            for values in data:
+                number = values.split(b',')
+                if check_float(number[0].strip()) and check_float(number[1].strip()) :  
+                    x.append(float(number[0].strip()))
+                    y.append(float(number[1].strip()))
+                else:
+                    pass
         
+            pyplot.plot(x,y,'bo')
+            pyplot.xlabel('X Value (Units)')
+            pyplot.ylabel('Y Value (Units)')
 
 
-## main testing encoder code
-if __name__ == '__main__':
-    encoder1 = Encoder(1)
-    encoder2 = Encoder(2)
-    while(True):
-        time.sleep(0.1)
-        print([encoder1.read(), encoder2.read()])
         
