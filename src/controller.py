@@ -13,6 +13,7 @@ import pyb
 import motor
 import encoder
 import time
+import utime
 
 class Controller:
     '''! 
@@ -26,6 +27,10 @@ class Controller:
         @details    
         '''
         self.gain = 0
+        self.positional_data = []
+        self.start_time = utime.ticks_ms()
+        self.offset_time = 0
+        self.runs = 1
             
     def update(self, current_position):
         '''! 
@@ -51,6 +56,25 @@ class Controller:
         '''
         self.des_pos = desired_position
 
+    def step_response(self, current_position):
+        '''! 
+        @brief      
+        @details    
+        '''
+        error = self.des_pos - current_position
+        output = error * self.gain
+        if self.runs == 1:
+            self.offset_time = utime.ticks_diff(utime.ticks_ms(), self.start_time)
+                                           
+        self.positional_data.append([utime.ticks_diff(utime.ticks_ms(), self.start_time) - self.offset_time, current_position])
+        self.runs += 1
+        return output
+    
+    def get_position(self):
+        for item in self.positional_data:
+            print(item, "\n")
+        
+
 if __name__ == '__main__':
     start_time = time.time()
     # Create objects
@@ -62,9 +86,9 @@ if __name__ == '__main__':
     mtr1.enable()
     
     ctr.set_gain(0.1)
-    ctr.set_position(10000)
+    ctr.set_position(16300)
     
-    while time.time() - start_time < 1:
+    while time.time() - start_time < 2:
         power = ctr.update(enc1.read())
         mtr1.set_duty_cycle(power)
         print(enc1.read())
