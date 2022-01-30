@@ -15,3 +15,6 @@ with serial.Serial('COM4', 115200) as s_port:
     s_port.write(b"teststring\r")
     print ("Already wrote through serial port")
     
+    data = s_port.readlines()
+    
+    

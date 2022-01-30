@@ -72,7 +72,8 @@ class Controller:
     
     def get_position(self):
         for item in self.positional_data:
-            print(item, "\n")
+           print(str(item[0]) + "," + str(item[1]), "\n")
+        print("DATA")
         
 
 if __name__ == '__main__':

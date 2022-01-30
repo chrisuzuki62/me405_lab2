@@ -16,63 +16,57 @@ import serial
 import time
 from matplotlib import pyplot
 
-class pc_com:
-    '''!
-        @brief Interface with quadrature encoders
-        @details Creates a class that can be called into other python files that
-                 is used to interface and read out the position of an encoder.
-                 The class contains 3 methods. One to construct an encoder object,
-                 one to get the position that the encoder reads, and one to set the 
-                 position of the encoder to a specified value.
-    '''
-
-    def __init__(self, COMx):
+def is_number(string):
+    """!
+    @brief   Identifies if the csv value can be converted into a float
+    @param   string    The entire csv value to be tested
+    """
+    try:
+        # Try converting the string value to a float value
+        float(string)
+        # Return boolean true if possible
+        return True
+    except ValueError:
+        # Return boolean false if not possible
+        return False
         
-        '''!
-            @brief Constructs an encoder object
-            @details Instantiates an encoder object that contains 2 different
-                     methods that can be used in other python files. This also
-                     generally sets up the use of any encoder so multiple can 
-                     be called in any file.
-            @param enc_num Value used to establish each instance of the encoder.
-                           Currently, this driver only supports up to 2 encoders.
-                           Therefore this argument is either 1 or 2.
-        '''
-        self.COMx = COMx
+with serial.Serial('COM3', 115200) as s_port:
+
+    gain = input("Please input the desired gain: ")
+    s_port.write(b'teststring\r')
+    
+    start_time = time.time()
+    
+    while time.time() < start_time + 5:
+        pass
+    
+    bool = True
+    data = []
+    
+    while bool:
+        temp = s_port.readline()
+        if temp == b'DATA\r\n':
+            bool = False
+            break
+        else:
+            data.append(temp.decode())
             
+    print(data)
+    
+    
+    
+'''
+    x = []
+    y = []
+    for values in data:
+        #number = values.split(b',')
+        if is_number(values[0].strip()) and is_number(values[1].strip()) :  
+            x.append(float(values[0].strip()))
+            y.append(float(values[1].strip()))
+        else:
+            pass
 
-    def check_float(val):
-    ''' @brief checks the value if it can be turned into a float
-        @details This function is used to make sure a float value is going to be grpahed.
-        @param val This input value is being checked if it can be a float data type
-    '''
-        try:
-            float(val)
-            return True
-        except ValueError:
-            return False
-
-    def read(self):
-        '''!
-            @brief Updates encoder position 
-            @details Creates an update method that when ran will update the position
-                     of the specfied encoder
-            @return Returns the position of the encoder
-        '''
-        with serial.Serial (self.COMx, 115200) as s_port:
-            data = s_port.readlines()
-            x = []
-            y = []
-            for values in data:
-                number = values.split(b',')
-                if check_float(number[0].strip()) and check_float(number[1].strip()) :  
-                    x.append(float(number[0].strip()))
-                    y.append(float(number[1].strip()))
-                else:
-                    pass
-        
-            pyplot.plot(x,y,'bo')
-            pyplot.xlabel('X Value (Units)')
-            pyplot.ylabel('Y Value (Units)')
-
-        
+    pyplot.plot(x,y,'bo')
+    pyplot.xlabel('X Value (Units)')
+    pyplot.ylabel('Y Value (Units)')
+ '''
