@@ -21,7 +21,7 @@ import struct
 import time
 
 
-##Create objects
+# Create motor, encoder, and controller objects
 mtr1 = motor.Motor(1)
 enc1 = encoder.Encoder(1)
 ctr = controller.Controller()
@@ -38,24 +38,31 @@ while True:
         #ctr.set_gain(tempgain.decode()[0:-1])
         #input_position = int(input().decode()[0:-1])
         
+        # Wait for an input through the serial port
         input()
+        
+        # Establish the desired gain and position
         ctr.set_gain(0.01)
         ctr.set_position(20000)
         
-        # Create empty variables
+        # Reset the list inside the controller class
         ctr.positional_data = []
-        time_array = []
-        position_array = []
             
-        # Start Reference Time
+        # Establish reference time
         start_time = time.time()
-
+        
+        # Run the step response for two seconds
         while time.time() - start_time < 2:
+            
+            # Run the controller every 10ms
             power = ctr.step_response(enc1.read())
             mtr1.set_duty_cycle(power)
             utime.sleep_ms(10)
-            
+        
+        # Disable motor after step response
         mtr1.disable()
+        
+        # Print data through serial port
         ctr.get_position()
     
     except KeyboardInterrupt:
