@@ -4,7 +4,7 @@
 @details  This program is to be installed and ran on the MicroPython board. It creates the class
           objects motor, controller, and encoder. The program runs a loop until the user types a
           value into the serial port starting the step response test. The motor will run to the desired
-          angle rely on the encoder and controller feedback to control the motor output.
+          angle which rely on the encoder and controller feedback to control the motor output.
 
 @author Damond Li
 @author Chris Or
