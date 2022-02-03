@@ -17,6 +17,14 @@ This data is then appended to a list of positonal data, which then used to produ
 Below are the test result of the different Kp Gains Tested with the target position being 20000 ticks.
 
 
-![gain_test](gain0.1.jpg)
+![gain_test1](gain0.1.png)
+
+Figure 1. Kp Gain = 0.1
+
+![gain_test](gain0.01.png)
+
+Figure 2. Kp Gain = 0.11
+
+![gain_test](gain0.1.png)
 
 Figure 1. Kp Gain = 0.1
