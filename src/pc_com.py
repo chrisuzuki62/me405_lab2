@@ -8,7 +8,7 @@
 @author Damond Li
 @author Chris Or
 @author Chris Suzuki
-@date 2/2/22
+@date 2-Feb-2022 SPL Original file
 '''
 import serial
 import time
