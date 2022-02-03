@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Lab 2", "index.html", [
+  [ "Lab2", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
