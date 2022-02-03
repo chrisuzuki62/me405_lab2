@@ -26,12 +26,17 @@ while True:
     try:
         # Enable motor
         mtr1.enable()
-
-        input_gain = input("Please write something")
-
-        ctr.set_gain(0.1)
-        ctr.set_position(16300)
-
+        #tempgain = b'0.35\r'
+        #input_gain = float(input().decode()[0:-1])
+        #print(type(input_gain))
+        #ctr.set_gain(tempgain.decode()[0:-1])
+        
+        #input_position = int(input().decode()[0:-1])
+        input()
+        ctr.set_gain(0.01)
+        ctr.set_position(20000)
+        
+        ctr.positional_data = []
         time_array = []
         position_array = []
             

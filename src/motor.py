@@ -88,12 +88,12 @@ class Motor:
                      cycle of the voltage sent to the motor 
         '''
         #print ('Setting duty cycle to ' + str (level))
-        
+        self.level = float(level)
         ## Limits the duty cycle to +/- 100%
-        if level > 100:
-            level = 100
-        elif level < -100:
-            level = -100
+        if self.level > 100:
+            self.level = 100
+        elif self.level < -100:
+            self.level = -100
         
         ## Sets PWM value to channels 1 or 2 depending on positive or negative 
         ## which determines direction. The value of level is set as a positive

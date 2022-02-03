@@ -61,19 +61,20 @@ class Controller:
         @brief      
         @details    
         '''
-        error = self.des_pos - current_position
+        error = int(self.des_pos) - int(current_position)
         output = error * self.gain
         if self.runs == 1:
             self.offset_time = utime.ticks_diff(utime.ticks_ms(), self.start_time)
                                            
         self.positional_data.append([utime.ticks_diff(utime.ticks_ms(), self.start_time) - self.offset_time, current_position])
         self.runs += 1
-        return output
+        return int(output)
     
     def get_position(self):
         for item in self.positional_data:
            print(str(item[0]) + "," + str(item[1]), "\n")
         print("DATA")
+        self.runs = 1
         
 
 if __name__ == '__main__':
